@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ListingView: View {
     
@@ -15,14 +16,23 @@ struct ListingView: View {
         List {
             ForEach(api.listing, id: \.self) { link in
                 LinkView(link: link)
+                
             }
-        }
+            VStack {
+                ActivityIndicator(.constant(true))
+                Text("Loading...")
+            }
+            .padding()
+            .onAppear {
+                api.fetchPosts()
+            }
+            .frame(maxWidth: .infinity)
+        }.refreshable {
+                api.fetchPosts()
+            }
         .listStyle(.plain)
-        .onAppear {
-            api.fetchPosts() {
-            }
-        }
     }
+    
 }
 
 struct ListingView_Previews: PreviewProvider {

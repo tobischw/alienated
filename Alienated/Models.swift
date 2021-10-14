@@ -25,12 +25,12 @@ enum Data: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let x = try? container.decode(Listing.self) {
-            self = .listing(x)
+        if let thing = try? container.decode(Listing.self) {
+            self = .listing(thing)
             return
         }
-        if let x = try? container.decode(Link.self) {
-            self = .link(x)
+        if let thing = try? container.decode(Link.self) {
+            self = .link(thing)
             return
         }
         throw DecodingError.typeMismatch(Data.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Data"))

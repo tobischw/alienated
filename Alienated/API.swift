@@ -10,9 +10,13 @@ import SwiftUI
 
 class API: ObservableObject {
     @Published var listing = [Link]()
+    @Published var isLoading = false
     
-    func fetchPosts(completion: @escaping () -> ()) {
-        let url = URL(string: "https://www.reddit.com/r/all.json")!
+    @Published var lastThing: String?
+   
+    func fetchPosts() {
+        isLoading = true
+        let url = URL(string: "https://www.reddit.com/r/all.json\(lastThing != nil ? "?after=\(lastThing!)" : "")")!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
@@ -21,15 +25,14 @@ class API: ObservableObject {
             if let thing = try? JSONDecoder().decode(Thing.self, from: data),
                let data = thing.data {
                 if case .listing(let listing) = data {
-                    
                     let newListings: [Link] = listing.children.compactMap {
                         guard case .link(let link) = $0.data else { return nil }
                         return link
                     }
-                    
                     DispatchQueue.main.async {
+                        self.isLoading = false
                         self.listing.append(contentsOf: newListings)
-                        completion()
+                        self.lastThing = listing.after
                     }
                 }
             }
