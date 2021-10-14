@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var api: ListingService = ListingService()
+    @StateObject var api: ListingService = ListingService(subreddit: "askreddit")
     
     var body: some View {
         NavigationView {

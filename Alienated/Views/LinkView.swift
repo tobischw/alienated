@@ -14,6 +14,7 @@ struct LinkView: View {
     var body: some View {
         HStack {
             if let thumbnail = link.thumbnail,
+               !thumbnail.isEmpty,
                let thumbnailURL = URL(string: thumbnail) {
                 WebImage(url: thumbnailURL)
                     .resizable()
@@ -21,6 +22,7 @@ struct LinkView: View {
                     .transition(.fade(duration: 0.5))
                     .scaledToFit()
                     .frame(width: 64)
+                    .padding()
             }
             VStack(alignment: .leading) {
                 Text(link.title)
@@ -29,7 +31,7 @@ struct LinkView: View {
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
             }
-        }
+        }.padding(5)
     }
 }
 

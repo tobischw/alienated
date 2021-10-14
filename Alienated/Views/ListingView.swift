@@ -37,6 +37,6 @@ struct ListingView: View {
 
 struct ListingView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingView(api: ListingService())
+        ListingView(api: ListingService(subreddit: "all"))
     }
 }
