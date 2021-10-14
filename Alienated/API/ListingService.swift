@@ -8,15 +8,21 @@
 import Foundation
 import SwiftUI
 
-class API: ObservableObject {
+class ListingService: ObservableObject {
     @Published var listing = [Link]()
     @Published var isLoading = false
     
     @Published var lastThing: String?
+    
+    var subreddit: String
+    
+    init(subreddit: String) {
+        self.subreddit = subreddit
+    }
    
     func fetchPosts() {
         isLoading = true
-        let url = URL(string: "https://www.reddit.com/r/all.json\(lastThing != nil ? "?after=\(lastThing!)" : "")")!
+        let url = URL(string: "https://www.reddit.com/r/\(subreddit).json\(lastThing != nil ? "?after=\(lastThing!)" : "")")!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {

@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct ListingView: View {
     
-    @ObservedObject var api: API
+    @ObservedObject var api: ListingService
     
     var body: some View {
         List {
@@ -37,6 +37,6 @@ struct ListingView: View {
 
 struct ListingView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingView(api: API())
+        ListingView(api: ListingService())
     }
 }

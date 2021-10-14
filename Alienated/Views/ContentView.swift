@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var api: API = API()
+    @StateObject var api: ListingService = ListingService()
     
     var body: some View {
         NavigationView {
