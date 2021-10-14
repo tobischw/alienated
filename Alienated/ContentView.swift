@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var api: API = API()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            ListingView(api: api)
+                .navigationTitle("all")
+        }
     }
 }
 
