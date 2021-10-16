@@ -15,8 +15,9 @@ struct ListingView: View {
     var body: some View {
         List {
             ForEach(api.listing, id: \.self) { link in
-                LinkView(link: link)
-                
+                NavigationLink(destination: PostView(link: link)) {
+                    LinkView(link: link)
+                }
             }
             VStack {
                 ActivityIndicator(.constant(true))
@@ -28,8 +29,8 @@ struct ListingView: View {
             }
             .frame(maxWidth: .infinity)
         }.refreshable {
-                api.fetchPosts()
-            }
+            api.fetchPosts()
+        }
         .listStyle(.plain)
     }
     

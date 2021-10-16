@@ -22,6 +22,7 @@ struct Thing: Decodable, Identifiable {
 enum Data: Decodable {
     case listing(Listing)
     case link(Link)
+    case comment(Comment)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -31,6 +32,10 @@ enum Data: Decodable {
         }
         if let thing = try? container.decode(Link.self) {
             self = .link(thing)
+            return
+        }
+        if let thing = try? container.decode(Comment.self) {
+            self = .comment(thing)
             return
         }
         throw DecodingError.typeMismatch(Data.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Data"))
@@ -48,4 +53,10 @@ struct Link: Decodable, Hashable {
     var url: String?
     var score: Int
     var thumbnail: String?
+}
+
+struct Comment: Decodable {
+    var author: String
+    var body: String
+    var replies: Listing
 }

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var api: ListingService = ListingService(subreddit: "askreddit")
+    static let subreddit = "all"
+    
+    @StateObject var api: ListingService = ListingService(subreddit: subreddit)
     
     var body: some View {
         NavigationView {
             ListingView(api: api)
-                .navigationTitle("all")
+                .navigationTitle(Self.subreddit)
         }
     }
 }
