@@ -10,11 +10,12 @@ import SwiftUI
 struct ContentView: View {
     static let subreddit = "all"
     
-    @StateObject var api: ListingService = ListingService(subreddit: subreddit)
+    @StateObject var listingService: ListingService = ListingService(subreddit: subreddit)
+    @StateObject var commentsService: CommentsService = CommentsService()
     
     var body: some View {
         NavigationView {
-            ListingView(api: api)
+            ListingView(listingService: listingService, commentsService: commentsService)
                 .navigationTitle(Self.subreddit)
         }
     }

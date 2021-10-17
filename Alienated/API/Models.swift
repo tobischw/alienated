@@ -48,6 +48,7 @@ struct Listing: Decodable {
 }
 
 struct Link: Decodable, Hashable {
+    var id: String
     var subreddit: String
     var title: String
     var url: String?

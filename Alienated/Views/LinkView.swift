@@ -37,6 +37,6 @@ struct LinkView: View {
 
 struct LinkView_Previews: PreviewProvider {
     static var previews: some View {
-        LinkView(link: Link(subreddit: "test", title: "title", url: "", score: 0, thumbnail: ""))
+        LinkView(link: Link(id: "dsa374", subreddit: "test", title: "title", url: "", score: 0, thumbnail: ""))
     }
 }

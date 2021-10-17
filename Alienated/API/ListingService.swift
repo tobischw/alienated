@@ -20,22 +20,11 @@ class ListingService: ObservableObject {
         self.subreddit = subreddit
     }
     
-    func fetchThing(url: URL, completion: @escaping (Thing)->()) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            if let thing = try? JSONDecoder().decode(Thing.self, from: data) {
-                completion(thing)
-            }
-        }.resume()
-    }
-    
     func fetchPosts() {
         isLoading = true
         let url = URL(string: "https://www.reddit.com/r/\(subreddit).json\(lastThing != nil ? "?after=\(lastThing!)" : "")")!
         
-        fetchThing(url: url) { thing in
+        API.shared.fetchThing(url: url) { thing in
             guard let data = thing.data else { return }
             if case .listing(let listing) = data {
                 let newListings: [Link] = listing.children.compactMap {

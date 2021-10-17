@@ -10,12 +10,13 @@ import SDWebImageSwiftUI
 
 struct ListingView: View {
     
-    @ObservedObject var api: ListingService
+    @ObservedObject var listingService: ListingService
+    @ObservedObject var commentsService: CommentsService
     
     var body: some View {
         List {
-            ForEach(api.listing, id: \.self) { link in
-                NavigationLink(destination: PostView(link: link)) {
+            ForEach(listingService.listing, id: \.self) { link in
+                NavigationLink(destination: PostView(api: commentsService, link: link)) {
                     LinkView(link: link)
                 }
             }
@@ -25,11 +26,11 @@ struct ListingView: View {
             }
             .padding()
             .onAppear {
-                api.fetchPosts()
+                listingService.fetchPosts()
             }
             .frame(maxWidth: .infinity)
         }.refreshable {
-            api.fetchPosts()
+            listingService.fetchPosts()
         }
         .listStyle(.plain)
     }
@@ -38,6 +39,6 @@ struct ListingView: View {
 
 struct ListingView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingView(api: ListingService(subreddit: "all"))
+        ListingView(listingService: ListingService(subreddit: "all"), commentsService: CommentsService())
     }
 }
